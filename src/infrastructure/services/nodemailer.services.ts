@@ -26,7 +26,8 @@ export class NodemailerEmailService {
             from: 'Marcela - yecnyardila90@gmail.com',
             to: options.to,
             subject: options.subject,
-            text: options.body
+            text: options.body,
+            attachments
         }
         return transporter.sendMail(mailOptions)
     }

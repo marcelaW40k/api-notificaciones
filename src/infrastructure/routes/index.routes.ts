@@ -1,6 +1,7 @@
 import express from "express";
 import { NodemailerEmailService } from "../services/nodemailer.services";
 import { EmailOptipons } from "../../domain/EmailOptions";
+import { pbkdf2 } from "crypto";
 
 const router = express.Router();
 
@@ -11,7 +12,8 @@ const router = express.Router();
     const options: EmailOptipons = {
         to: payload.to,
         subject: payload.subject,
-        body: payload.body
+        body: payload.body,
+        pdf: payload.pdf ? Buffer.from(payload.pdf, 'base64') : undefined
     }
     mailService.sendEmail(options).then(() => {
         console.log('El correo se envio');

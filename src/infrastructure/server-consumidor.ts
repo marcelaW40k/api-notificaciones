@@ -7,10 +7,10 @@ const conectarMq = async () => {
     try {
         const url: string = "amqp://localhost";
         const conexion = await amqp.connect(url);
-        console.log("Conectado a MQ");
+        //console.log("Conectado a MQ");
 
         const channel = await conexion.createChannel();
-        console.log("Creación del canal - Habilitado para crear colas.");
+        //console.log("Creación del canal - Habilitado para crear colas.");
 
         const nombraCola = "notificaciones";
         channel.assertQueue(nombraCola, { durable: true });
@@ -26,11 +26,11 @@ const conectarMq = async () => {
 const consumirMensajes = async (channel: Channel) => {
     try {
         const resultado = await channel.consume("notificaciones", (message: ConsumeMessage | null) => {
+
             if (message) {
-                console.log("Mensaje recibido");
                 const payload = JSON.parse(message.content.toString())
                 const pdf = payload.pdf ? Buffer.from(payload.pdf, 'base64') : undefined
-
+            
                 const mailService = new NodemailerEmailService()
                 const options: EmailOptipons = {
                     to: payload.to,
@@ -43,7 +43,6 @@ const consumirMensajes = async (channel: Channel) => {
                 }).catch(error => {
                     console.error('El correo NO se envio', error);
                 })
-                // Confirmación de lectura del mensaje en la MQ
                 channel.ack(message)
             } else {
                 console.log("No hay mensaje");

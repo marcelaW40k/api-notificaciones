@@ -7,6 +7,7 @@ export const createServerExpress = () => {
     
    app.use(express.json());
    app.use(router);
+   
 
     const PORT = process.env.PORT || 3001;
     app.listen(PORT, () => {
