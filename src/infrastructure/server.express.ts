@@ -1,5 +1,6 @@
 import express from 'express';
 import router from './routes/index.routes';
+import middleware404 from './middlewares/middlewares';
 
 
 export const createServerExpress = () => {
@@ -7,7 +8,7 @@ export const createServerExpress = () => {
     
    app.use(express.json());
    app.use(router);
-   
+   app.use(middleware404)
 
     const PORT = process.env.PORT || 3001;
     app.listen(PORT, () => {
