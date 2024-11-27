@@ -1,7 +1,6 @@
 import express from "express";
 import { NodemailerEmailService } from "../services/nodemailer.services";
 import { EmailOptipons } from "../../domain/EmailOptions";
-import { pbkdf2 } from "crypto";
 
 const router = express.Router();
 
